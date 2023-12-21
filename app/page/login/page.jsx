@@ -1,7 +1,11 @@
+"use client"
 import React from "react"; 
 import { FcGoogle } from "react-icons/fc";
 
 function Login() {
+  const handleGoogleLogin = () => {
+    console.log("clicekd")
+  }
   return (
     <div className="w-full h-screen flex justify-center items-center ">
       <div className="flex flex-col justify-between gap-3 ">
@@ -35,7 +39,9 @@ function Login() {
         </div>
 
         <span className="text-center my-3">
-          <button className="bg-transparent border-y-pink-200  text-white w-80 h-12 rounded-2xl border border-white flex items-center justify-center">
+          <button className="bg-transparent border-y-pink-200  text-white w-80 h-12 rounded-2xl border border-white flex items-center justify-center"
+          onClick={handleGoogleLogin}
+          >
             <FcGoogle className="mx-5" /> Continue with Google
           </button>
         </span>
