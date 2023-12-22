@@ -19,7 +19,7 @@ const PostHead = () => {
           {" "}
         </div>
 
-        <button className="w-3/2 mx-4 text-white text-opacity-40 text-md   h-full flex justify-center items-center " onClick={console.log("buttkjfnksn")}>
+        <button className="w-3/2 mx-4 text-white text-opacity-40 text-md   h-full flex justify-center items-center ">
           Start thread ... 
         </button>
           </div>

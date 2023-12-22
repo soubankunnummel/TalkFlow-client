@@ -3,11 +3,10 @@
 // import axios from "axios";
 import React, { useState } from "react";
 import { FcGoogle } from "react-icons/fc";
-import { useGoogleLogin } from '@react-oauth/google';
+import { useGoogleLogin } from "@react-oauth/google";
 import { googleSing, signupUser } from "@/app/service/auth";
 import { useRouter } from "next/navigation";
 import { jwtDecode } from "jwt-decode";
-
 
 function Signup() {
   const router = useRouter();
@@ -17,12 +16,17 @@ function Signup() {
     email: "",
     password: "",
   });
+  
 
   const handleSignup = async () => {
+    if(signup.username === "" || signup.name === "" ||
+     signup.email === "" || signup.password === "") {
+      return alert("Pleas fill althe inputs")
+     }
 
-    await signupUser(signup)
-    alert("login succes")
-    router.push("/page/login")
+    await signupUser(signup);
+    alert("login succes");
+    router.push("/page/login");
   };
 
   const handleChange = (e) => {
@@ -31,18 +35,16 @@ function Signup() {
 
   const login = useGoogleLogin({
     // onSuccess: codeResponse => console.log(codeResponse),
-    
-    flow: 'auth-code',
+
+    flow: "auth-code",
     onSuccess: async (response) => {
-      const decodedData = jwtDecode(response.credential); 
-      console.log(decodedData)
+      const decodedData = jwtDecode(response.credential);
+      console.log(decodedData);
       // await googleSing(decodedData);
     },
-    onFailure: (error) => console.error('Google login error:', error),
-         
-  });     
-  
-  
+    onFailure: (error) => console.error("Google login error:", error),
+  });
+
   // const handleGoogleLogin = async (res) => {
   //   const decoded = jwtDecode(res.credential);
   //   console.log(decoded)
@@ -50,8 +52,6 @@ function Signup() {
   //   // setAccount(decoded);
   //   // await addUser(decoded);
 
- 
-  
   // };
   // const handleGoogleLogin = async () => {
   //   try {
@@ -75,6 +75,7 @@ function Signup() {
             type="text"
             placeholder="Name"
             name="name"
+            required
             value={signup.name}
             onChange={handleChange}
             className="w-1/2 placeholder:ps-2 h-12 rounded-2xl p-3 bg-stone-800"
@@ -83,6 +84,7 @@ function Signup() {
             type="text"
             placeholder="Username"
             name="username"
+            required
             value={signup.username}
             onChange={handleChange}
             className="w-1/2 placeholder:ps-2 h-12 p-3 rounded-2xl bg-stone-800"
@@ -92,6 +94,7 @@ function Signup() {
           type="email"
           placeholder="Email"
           name="email"
+          required
           value={signup.email}
           onChange={handleChange}
           className="w-full placeholder:ps-2 h-12 rounded-2xl bg-stone-800 p-3"
@@ -100,6 +103,7 @@ function Signup() {
           type="password"
           placeholder="Password"
           name="password"
+          required
           value={signup.password}
           onChange={handleChange}
           className="w-full placeholder:ps-2 h-12 rounded-2xl bg-stone-800 p-3"
@@ -129,10 +133,6 @@ function Signup() {
           >
             <FcGoogle className="mx-5" /> Continue with Google
           </button>
-      
-         
-
-          
         </span>
       </div>
     </div>

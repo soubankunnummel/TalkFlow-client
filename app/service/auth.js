@@ -4,6 +4,13 @@ import axios from "axios";
 
 const baseUrl = process.env.NEXT_PUBLIC_BASE_URL
 // console.log(baseUrl)
+ export const Axios = axios.create({
+    baseURL: process.env.NEXT_PUBLIC_BASE_URL,
+    headers:{
+        "Content-Type":"application/json",
+        // Authorization: 
+    }
+})
 
 
 // normal signup
@@ -12,13 +19,13 @@ const baseUrl = process.env.NEXT_PUBLIC_BASE_URL
         // console.log(signup)
         try {
             const response = await axios.post(
-                `${baseUrl}api/users/signup`,
+                `${baseUrl}/api/users/signup`,
                 signup
               );
               return response.data
 
         } catch (error) {
-            console.log(error)
+            console.log(error.message)
         }
     }
 
@@ -33,4 +40,20 @@ const baseUrl = process.env.NEXT_PUBLIC_BASE_URL
         }
     }  
 
-    export {signupUser}
+// login user
+
+    const loginuser = async (data) => {
+        try {
+            const response = await axios.post(`${baseUrl}api/users/login`,data)
+            if(response.status === 200){
+
+                return response.data
+            }
+        } catch (error) {
+            console.log("Err in login",error)
+            
+        }
+    }
+
+
+    export {signupUser, loginuser}
