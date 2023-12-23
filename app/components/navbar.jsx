@@ -7,13 +7,25 @@ import { HiHome, HiUser } from "react-icons/hi2";
 import { FaRegHeart } from "react-icons/fa6";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { logoutUser } from "../service/auth";
 
-function Navbar() {
+function Navbar() { 
   const router = useRouter();
 
   const handleSearchButtonClick = () => {
     router.push("/page/search");
   };
+  const handleLogout = async () => {
+    try {
+      // const response = await logoutUser()
+      if(response){
+        alert("Logged out")
+        router.push("/")
+      }
+    } catch (error) {
+      console.log("Erro in Logout ui",error)
+    }
+  }
 
   return (
     <div className="w-full h-auto mt-0 p-5 bg-black flex  justify-between items-center sticky top-0 bg-opacity-90  " style={{
@@ -65,6 +77,9 @@ function Navbar() {
             </li>
             <li>
               <a>Item 2</a>
+            </li>
+            <li>
+              <a onClick={handleLogout}>Log out</a>
             </li>
           </ul>
         </div>

@@ -24,7 +24,7 @@ function Signup() {
       return alert("Pleas fill althe inputs")
      }
 
-    await signupUser(signup);
+    // await signupUser(signup);
     alert("login succes");
     router.push("/page/login");
   };
@@ -116,9 +116,7 @@ function Signup() {
           Sign Up
         </button>
         <span className="text-center text-stone-700 text-sm hover:text-white">
-          <a href="#" className="">
-            Forgot Password?
-          </a>
+         
         </span>
         <div className="flex items-center gap-3">
           <hr className="w-full border-t-[1px] border-gray-500" />
