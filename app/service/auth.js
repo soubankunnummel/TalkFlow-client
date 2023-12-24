@@ -1,59 +1,66 @@
+// auth.js
 import axios from "axios";
+import Axios from "./axios";
+import useToken from "./Token";
+
+const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
+// const { setToken: setCookieToken } = useToken();
+// export default function Auth() {
 
 
-
-const baseUrl = process.env.NEXT_PUBLIC_BASE_URL
-// console.log(baseUrl)
- export const Axios = axios.create({
-    baseURL: process.env.NEXT_PUBLIC_BASE_URL,
-    headers:{
-        "Content-Type":"application/json",
-        // Authorization: 
+  const signupUser = async (signup) => {
+    try {
+      const response = await Axios.post(`${baseUrl}/api/users/signup`, signup);
+      return response.data;
+    } catch (error) {
+      console.log(error.message);
     }
-})
-
-
-// normal signup
-
-    const signupUser = async (signup) => {
-        // console.log(signup)
-        try {
-            const response = await axios.post(
-                `${baseUrl}/api/users/signup`,
-                signup
-              );
-              return response.data
-
-        } catch (error) {
-            console.log(error.message)
-        }
-    }
-
-// google signup 
-
-    const googleSing = async (data) => {
-        try {
-            const response = await axios.post(`${baseUrl}api/users/login/google`,data)
-            return response.data
-        } catch (error) {
-            console.log("Err in googl login",error)
-        }
-    }  
-
-// login user
-
+  };
+  
+  const googleSing = async (data) => {
+    try {
+      const response = await Axios.post(
+        `${baseUrl}api/users/login/google`,
+        data
+        );
+        return response.data;
+      } catch (error) {
+        console.log("Error in Google login", error);
+      }
+    };
+    
     const loginuser = async (data) => {
-        try {
-            const response = await axios.post(`${baseUrl}api/users/login`,data)
-            if(response.status === 200){
-
-                return response.data
-            }
-        } catch (error) {
-            console.log("Err in login",error)
-            
+      try {
+        const response = await Axios.post(`${baseUrl}api/users/login`, data);
+        if (response.status === 200) {
+          const token = response.data.token;
+          localStorage.setItem("jwt",token)
+          // setCookieToken(token);
+          console.log(token)
+          return response.data;
         }
+      } catch (error) {
+        console.log("Error in login", error);
+      }
+    };
+    
+    const logoutUser = async () => {
+      try {
+        const token = localStorage.getItem("jwt")
+        const response = await axios.post(`/api/users/logout`, null, {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+      }
+    })
+      if (response.status === 200) {
+        return response.data;
+      }
+    } catch (error) {
+      console.log("Error in Logout", error);
     }
-
-
-    export {signupUser, loginuser}
+  };
+  //   return null
+  // }
+  export { signupUser, googleSing, loginuser, logoutUser };
+  

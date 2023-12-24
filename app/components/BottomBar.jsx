@@ -1,9 +1,13 @@
 import React from 'react'
 import { FaRegHeart } from 'react-icons/fa6'
 import { HiHome, HiUser } from 'react-icons/hi2'
-import { MdEditDocument, MdOutlineSearch } from 'react-icons/md'
+import { FiSearch } from "react-icons/fi";
+import { IoCreateOutline } from "react-icons/io5";
 
-const BottomBar = () => {
+
+const BottomBar = () => { 
+
+
   return (
     
     <div className="button-container ">
@@ -11,10 +15,10 @@ const BottomBar = () => {
       <HiHome className="text-xl text-white text-opacity-50 hover:text-opacity-90" />
     </button>
     <button className="btn  px-5 py-4 bg-transparent border-none rounded-lg  ">
-      <MdOutlineSearch className="text-xl text-white text-opacity-50 hover:text-opacity-90" />
+      <FiSearch className="text-xl text-white text-opacity-50 hover:text-opacity-90" />
     </button>
     <button className="btn  px-5 py-4 bg-transparent border-none rounded-lg  ">
-      <MdEditDocument className="text-xl text-white text-opacity-50 hover:text-opacity-90" />
+      <IoCreateOutline className="text-xl text-white text-opacity-50 hover:text-opacity-90" />
     </button>
     <button className="btn  px-5 py-4 bg-transparent border-none rounded-lg  ">
       <FaRegHeart className="text-xl text-white text-opacity-50 hover:text-opacity-90" />
@@ -22,6 +26,7 @@ const BottomBar = () => {
     <button className="btn  px-5 py-4 bg-transparent border-none rounded-lg  ">
       <HiUser className="text-xl text-white text-opacity-50 hover:text-opacity-90" />
     </button>
+   
   </div>
   )
 }

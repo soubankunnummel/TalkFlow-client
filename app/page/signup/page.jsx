@@ -7,6 +7,7 @@ import { useGoogleLogin } from "@react-oauth/google";
 import { googleSing, signupUser } from "@/app/service/auth";
 import { useRouter } from "next/navigation";
 import { jwtDecode } from "jwt-decode";
+// import { useCookieToken } from "@/app/service/Token";
 
 function Signup() {
   const router = useRouter();
@@ -16,16 +17,21 @@ function Signup() {
     email: "",
     password: "",
   });
-  
+  // const { setToken: setCookieToken } = useCookieToken();
 
   const handleSignup = async () => {
-    if(signup.username === "" || signup.name === "" ||
-     signup.email === "" || signup.password === "") {
-      return alert("Pleas fill althe inputs")
-     }
+    if (
+      signup.username === "" ||
+      signup.name === "" ||
+      signup.email === "" ||
+      signup.password === ""
+    ) {
+      return alert("Pleas fill althe inputs");
+    }
 
     // await signupUser(signup);
     alert("login succes");
+    // setCookieToken(response.token);
     router.push("/page/login");
   };
 
@@ -34,13 +40,11 @@ function Signup() {
   };
 
   const login = useGoogleLogin({
-    // onSuccess: codeResponse => console.log(codeResponse),
-
     flow: "auth-code",
     onSuccess: async (response) => {
       const decodedData = jwtDecode(response.credential);
       console.log(decodedData);
-      // await googleSing(decodedData);
+      await googleSing(decodedData);
     },
     onFailure: (error) => console.error("Google login error:", error),
   });
@@ -115,9 +119,7 @@ function Signup() {
         >
           Sign Up
         </button>
-        <span className="text-center text-stone-700 text-sm hover:text-white">
-         
-        </span>
+        <span className="text-center text-stone-700 text-sm hover:text-white"></span>
         <div className="flex items-center gap-3">
           <hr className="w-full border-t-[1px] border-gray-500" />
           <span className="text-gray-500">or</span>

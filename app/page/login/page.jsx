@@ -17,7 +17,7 @@ function Login() {
   const handleLogin = async () => {
     if(login.username === "" || login.password === "" )return alert("pleas fill all inputs")
     try {
-      // const response = await loginuser(login);
+      const response = await loginuser(login);
 
       if (response) {
         alert("Login successful");
