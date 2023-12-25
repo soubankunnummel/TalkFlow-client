@@ -43,24 +43,71 @@ const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
         console.log("Error in login", error);
       }
     };
-    
+
+
+// log out user
+
+
+
     const logoutUser = async () => {
       try {
-        const token = localStorage.getItem("jwt")
-        const response = await axios.post(`/api/users/logout`, null, {
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${token}`,
+        const response = await Axios.post(`/api/users/logout`); 
+            
+        if (response.status === 200) {
+          document.cookie = "jwt=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+          return response.data.message;
+        }
+      } catch (error) {
+        console.log("Error in Logout", error);
       }
-    })
-      if (response.status === 200) {
-        return response.data;
-      }
-    } catch (error) {
-      console.log("Error in Logout", error);
-    }
-  };
+    };
+    
   //   return null
   // }
-  export { signupUser, googleSing, loginuser, logoutUser };
+
+// forgot passwoer 
+
+    const forgorPassword = async (email) => {
+      try {
+        const response = await Axios.post(`/api/users/forgot-password`,{
+          email:email
+        })
+        if(response.status === 200){
+          return response.data
+        }
+      } catch (error) {
+        console.log("Error in ForgotPassword")
+      }
+    }
+
+// Verify otp
+
+    const verifyOtp = async (email, otp) => {
+      try {
+        const response = await Axios.post(`/api/users/verify-otp`,{
+          email, otp
+        })
+        if(response.status === 200) {
+          return response.data
+        }
+      } catch (error) {
+        console.log("Error in verfiy OTP")
+      }
+    }
+
+// Rset password
+
+    const resetPassword = async (email,newPassword) => {
+      try {
+        const response = await Axios.post(`/api/users/reset-password`,{
+          email,newPassword
+        })
+        if(response.status === 200) {
+          return response.data
+        }
+      } catch (error) {
+        console.log("Error in Reset passwoerd",error)
+      }
+    }
+  export { signupUser, googleSing, loginuser, logoutUser, forgorPassword, verifyOtp, resetPassword};
   

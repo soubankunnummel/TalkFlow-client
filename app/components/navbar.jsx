@@ -9,10 +9,11 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { logoutUser } from "../service/auth";
 import { CgMoreO } from "react-icons/cg";
-// import { useCookieToken } from "@/app/service/Token";
-function Navbar() {
+
+
+
+function NavBar() {
   const router = useRouter();
-  // const { setToken: setCookieToken } = useCookieToken();
   const handleSearchButtonClick = () => {
     router.push("/page/search");
   };
@@ -21,7 +22,7 @@ function Navbar() {
 
   const handleLogout = async () => {
     try {
-      const response = await logoutUser();
+      const response = await logoutUser(); 
       if (response) {
         alert("Logged out");
         // setCookieToken(null);
@@ -121,7 +122,7 @@ function Navbar() {
               <a>Item 1</a>
             </li>
             <li>
-              <a>Item 2</a>
+              <a>Item 2</a> 
             </li>
             <li>
               <a onClick={handleLogout}>Log out</a>
@@ -133,4 +134,4 @@ function Navbar() {
   );
 }
 
-export default Navbar;
+export default NavBar;

@@ -5,11 +5,11 @@ import { useRouter } from "next/navigation";
 // import Navbar from "@/app/components/navbar";
 import React, { useState } from "react";
 import Profile from "../profile/page";
-
+ 
 
 function Home() {
   const router = useRouter();  
-  const [profile,setProfiel] = useState(false)
+  const [profile,setProfiel] = useState(true)
   
 
   return (

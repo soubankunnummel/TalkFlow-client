@@ -1,84 +1,123 @@
-'use client'
+"use client";
 
 import { MdAddCircle } from "react-icons/md";
 import { IoIosMore } from "react-icons/io";
 import PostHead from "./PostHead";
 import { useEffect, useState } from "react";
 import { getPost } from "../service/post";
+import Loading from "./Loading";
+import Like from "./Like";
+import Coment from "./Coment";
+import Share from "./Share";
+import Repost from "./Repost";
 const Post = () => {
-
-  const [post, setPost] = useState([])
+  const [post, setPost] = useState([]);
   console.log(post)
+  const [loading, setLoading] = useState(true);
+  
   useEffect(() => {
     const fetchPosts = async () => {
       try {
-        const response  = await getPost()
-        if(response){
-          setPost(response)
+        const response = await getPost();
+        if (response) {
+          setPost(response);
+          setLoading(false)
         }
-
       } catch (error) {
-        console.log("Erro in post componet fech post",error)
+        console.log("Erro in post componet fech post", error);
       }
-    }
-    fetchPosts()
-  },[])
-  const arr = [3,5,]
+    };
+    fetchPosts();
+  }, []);
+
+
+  
+    useEffect(() => {
+      const calculatePostBodyHeight = () => {
+        const postBodies = document.querySelectorAll(".post-body");
+        postBodies.forEach((postBody) => {
+          const contentHeight = postBody.scrollHeight;
+          postBody.style.height = `${contentHeight}px`;
+        });
+      };
+
+      calculatePostBodyHeight();
+
+      window.addEventListener("resize", calculatePostBodyHeight);
+
+      return () => {
+        window.removeEventListener("resize", calculatePostBodyHeight);
+      };
+    }, [post]);
+
 
   return (
     <>
-    <PostHead/>
-    {post.map((item) => (
+    
 
-      <div className="w-full md:w-[580px] h-full  md:p-2 p-3 flex flex-col  justify-between items-center mb-10 ">
+      {loading ? (
        
-          <div className="h-auto w-full bg-black border-t-[1px] border-white flex border-opacity-30 p-2">
-            <div className="h-ful w-fit">
-              <div className="w-fit h-full  flex flex-col items-center gap-3">
-              <div
-            className="h-10 w-10 rounded-full bg-white box-border "
-            style={{
-              backgroundImage:
-                "url('https://img.freepik.com/free-photo/people-holding-wechat-icon_53876-63371.jpg?size=626&ext=jpg&ga=GA1.1.1677573732.1702106196&semt=ais')",
-              backgroundSize: "contain",
-            }}
-            >
-           
-            <button className=" relative top-5 left-5  ">
-              <MdAddCircle className="text-2xl hover:inset-5 " />
-            </button>
+        <Loading />
+      ) : (
+        <>
+          <PostHead />
+          {post.map((item) => (
+            <div className=" w-full md:w-[580px] h-auto  md:p-2 p-3 flex flex-col  justify-between items-center mb-10 ">
+              <div className="h-auto w-full bg-black border-t-[1px] border-white flex border-opacity-30 p-2">
+                <div className="h-ful w-fit">
+                  <div className="w-fit h-full  flex flex-col items-center gap-3">
+                    <div
+                      className="h-10 w-10 rounded-full bg-white box-border "
+                      style={{
+                        backgroundImage:
+                          `url(${item.postedBy.profilePic})`,
+                          backgroundSize: "cover",
+                          backgroundRepeat: "no-repeat",
+                          backgroundPosition: "center",
+                      }}
+                    >
+                      <button className=" relative top-5 left-5  ">
+                        <MdAddCircle className="text-2xl hover:inset-5 " />
+                      </button>
+                    </div>
+                    <div className="  h-fit md:h-[450px] w-[1px] bg-white bg-opacity-30 rounded-lg"></div>
+                  </div>
+                </div>
+                <div className=" w-full h-full bg-black flex flex-col">
+                  <div className="w-full flex m-3 justify-between gap-3 items-center">
+                    <span className="font-medium text-white hover:underline">
+                      {item.postedBy.username}{" "}
+                    </span>
+                    <div className="flex justify-between gap-3 items-center ">
+                      <span className="text-xs text-opacity-40 text-white">
+                        14 h
+                      </span>
 
-          </div>
-            <div className="h-[450px] w-[1px] bg-white bg-opacity-30 rounded-lg"></div>
+                      <button>
+                        <IoIosMore className="text-white" />
+                      </button>
+                    </div>
+                  </div>
+                  <div className="h-fit w-auto md:h-[400px] m-2">
+                    <p className="my-2 mx-2">{item.text}</p>
+                    <div className=" w-fit h-fit md:h-full md:w-full rounded-xl ">
+                      <img
+                        className="rounded-xl  w-full h-full "
+                        src={item.img}
+                        alt="Post images"
+                      />
+                    </div>
+                  </div>
+                  <div className="flex gap-1 mx-2 mt-10 items-center">
+
+                  <Like/> <Coment/>  <Repost/> <Share/>
+                  </div>
+                </div>
               </div>
             </div>
-              <div className="w-full h-full bg-black flex flex-col">
-                <div className="w-full flex m-3 justify-between gap-3 items-center">
-                  <span className="font-medium text-white">{item.postedBy.username} </span>
-                  <div className="flex justify-between gap-3 items-center ">
-                    
-                  <span className="text-xs text-opacity-40 text-white">14 h</span>
-
-                <button >
-
-                <IoIosMore className="text-white"/>
-                </button>
-                </div>
-                  </div>
-                <div className="h-[400px] w-auto  m-2">
-                  <p className="my-2 mx-2">{item.text}</p>
-                  <div className=" w-full h-full rounded-xl ">
-                      <img className="rounded-xl  w-full h-full " src={item.img} alt="Post images" />
-                  </div>
-                </div>
-                 </div>
-            
-
-          </div>
-
-          
-        </div>
-    ))}
+          ))}
+        </>
+      )}
     </>
   );
 };

@@ -1,7 +1,10 @@
 "use client"
 import React, { useState } from "react";
+import ForYou from "./Foryou";
+import FolloWing from "./Following";
 
 const PostHead = () => {
+  const [activeComponent, setActiveComponent] = useState(null);
   const [data ,setData] = useState()
   return (
     <>
@@ -20,7 +23,7 @@ const PostHead = () => {
         </div>
 
         <button className="w-3/2 mx-4 text-white text-opacity-40 text-md   h-full flex justify-center items-center ">
-          Start thread ... 
+          Start thread ...  
         </button>
           </div>
         <button className=" px-5 py-2 md:flex hidden  rounded-full bg-white text-black font-medium   bg-opacity-40">Post </button>
@@ -28,9 +31,14 @@ const PostHead = () => {
         
       </div>
       <div className="w-full h-10 flex md:hidden bg-black">
-        <div className="w-1/2  flex justify-center items-center border-stone-800   text-xs text-white text-opacity-40 hover:text-white hover:border-b-[1px] "><button>For you </button></div>
-        <div className="w-1/2  flex justify-center items-center border-stone-800  text-xs text-white text-opacity-40 hover:text-white hover:border-b-[1px]"><button>Following</button></div>
-
+      <ForYou
+          isActive={activeComponent === "ForYou"}
+          setActiveComponent={setActiveComponent}
+        />
+        <FolloWing
+          isActive={activeComponent === "Following"}
+          setActiveComponent={setActiveComponent}
+        />
       </div>
     </>
   );
