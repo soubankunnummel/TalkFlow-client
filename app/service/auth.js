@@ -1,7 +1,8 @@
 // auth.js
 import axios from "axios";
 import Axios from "./axios";
-import useToken from "./Token";
+import useToken from "./context";
+import toast from "react-hot-toast";
 
 const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
 // const { setToken: setCookieToken } = useToken();
@@ -10,17 +11,23 @@ const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
 
   const signupUser = async (signup) => {
     try {
-      const response = await Axios.post(`${baseUrl}/api/users/signup`, signup);
+      const response = await Axios.post(`/api/users/signup`, signup);
+      console.log(response) 
+      const token = response.data.token
+      localStorage.setItem("jwt",token)
       return response.data;
     } catch (error) {
-      console.log(error.message);
+      toast.error(error.response.error)
+      console.log(error);
     }
   };
+
+// google signup  
   
   const googleSing = async (data) => {
     try {
       const response = await Axios.post(
-        `${baseUrl}api/users/login/google`,
+        `/api/users/signup-google`,
         data
         );
         return response.data;
@@ -28,6 +35,28 @@ const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
         console.log("Error in Google login", error);
       }
     };
+
+
+// google login
+
+    export const  googleLogin = async (data) => {
+      try {
+        const response = await Axios.post(`/api/users/login-google`,data)
+        console.log("responst:--", response)
+        if( response.status === 200){
+          const token = response.data.token
+          localStorage.setItem("G-jwt",token)
+          console.log("gootoken",token)
+          return response.data
+        }
+
+      } catch (error) {
+        console.log("error in google Login",error)
+      }
+    }
+
+
+// log in
     
     const loginuser = async (data) => {
       try {
@@ -54,7 +83,7 @@ const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
         const response = await Axios.post(`/api/users/logout`); 
             
         if (response.status === 200) {
-          document.cookie = "jwt=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+          localStorage.removeItem("jwt")
           return response.data.message;
         }
       } catch (error) {
@@ -109,5 +138,5 @@ const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
         console.log("Error in Reset passwoerd",error)
       }
     }
-  export { signupUser, googleSing, loginuser, logoutUser, forgorPassword, verifyOtp, resetPassword};
+  export { signupUser, googleSing, loginuser, logoutUser, forgorPassword, verifyOtp, resetPassword,};
   
