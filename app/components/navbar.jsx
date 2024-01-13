@@ -178,12 +178,7 @@ function NavBar() {
                 <li>
                   <a onClick={handleLogout}>Log out</a>
                 </li>
-              {/* // ) : ( */}
-              {/* //   <li>
-              //     <a onClick={() => router.push("/page/login")}>LogIn</a>
-              //   </li>
-              // )
-            // } */}
+              
           </ul>
         </div>
       </div>
