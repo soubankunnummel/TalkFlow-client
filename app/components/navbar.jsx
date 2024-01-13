@@ -173,15 +173,17 @@ function NavBar() {
               <a onClick={handleToggleTheme}>Swich Appearnse</a>
             </li>
 
-            {localStorage.getItem("jwt") ? (
-              <li>
-                <a onClick={handleLogout}>Log out</a>
-              </li>
-            ) : (
-              <li>
-                <a onClick={() => router.push("/page/login")}>LogIn</a>
-              </li>
-            )}
+            {/* { */}
+              {/* // (typeof window !== "undefined" && localStorage.getItem("jwt")) ? ( */}
+                <li>
+                  <a onClick={handleLogout}>Log out</a>
+                </li>
+              {/* // ) : ( */}
+              {/* //   <li>
+              //     <a onClick={() => router.push("/page/login")}>LogIn</a>
+              //   </li>
+              // )
+            // } */}
           </ul>
         </div>
       </div>
