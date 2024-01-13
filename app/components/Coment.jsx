@@ -2,7 +2,7 @@ import React from 'react'
 import { TbMessageCircle } from "react-icons/tb";
 import { gePostbyId  } from '../service/post';
 import toast from 'react-hot-toast';
-import usePosts from '../zustand/posts/posts';
+import {usePosts} from '../zustand/posts/posts';
 
  
 function Coment({postId , index}) {

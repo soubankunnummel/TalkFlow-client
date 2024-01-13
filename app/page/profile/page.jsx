@@ -5,7 +5,7 @@ import Replies from "@/app/components/Replies";
 import Reposts from "@/app/components/Reposts";
 import ProfilePost from "@/app/components/ProfilePost";
 import RepliPost from "@/app/components/ProfileRepliPost";
-import usePosts from "@/app/zustand/posts/posts";
+import {usePosts} from "@/app/zustand/posts/posts";
 import ProfilRepos from "@/app/components/ProfilRepos";
 import { followers, getProfile, getUsr } from "@/app/service/users";
 import { useEffect } from "react";
@@ -54,7 +54,7 @@ function Profile() {
   const fechData = async () => {
     try {
       const response = await getProfile(username);
-      console.log(response.user.followers);
+
       if (response) {
         await setProfile(response);
       }

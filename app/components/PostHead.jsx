@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import ForYou from "./Foryou";
 import FolloWing from "./Following";
 import { useRouter } from "next/navigation";
-import useProfileStore from "../zustand/users/profileStore";
+import useProfileStore from "../zustand/users/profileStore"; 
 
 const PostHead = () => {
   const [activeComponent, setActiveComponent] = useState(false);

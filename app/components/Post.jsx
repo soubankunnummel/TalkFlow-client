@@ -11,20 +11,20 @@ import Coment from "./Coment";
 import Share from "./Share";
 import Repost from "./Repost";
 import FollowPost from "./FollowPost";
-import useFolloPost from "../zustand/posts/followPost";
+import {useFolloPost} from "../zustand/posts/followPost";
 import ForuFollow from "./ForuFollow";
 import UserModal from "./UserModal";
-import { getPostuser, getProfielPost, getProfile } from "../service/users";
+import { getPostuser, getProfielPost, getProfile, getUsr } from "../service/users";
 import useProfileStore from "../zustand/users/profileStore";
-import useProfile from "../zustand/posts/profilePost";
-import usePosts from "../zustand/posts/posts";
+import {useProfile} from "../zustand/posts/profilePost";
+import {usePosts} from "../zustand/posts/posts";
 import Reply from "./Modals/Reply";
 
 const Post = () => {
   const { feed } = useFolloPost();
 
   const { setProfile } = useProfileStore();
-  const { setUserProfil } = useProfile();
+  const { setUserProfil , setProfil} = useProfile();
   const { setPost, serUser, post } = usePosts();
 
   const hadleProfile = async (username) => {
@@ -32,11 +32,16 @@ const Post = () => {
       const response = await getProfile(username);
       const profilePost = await getProfielPost(username);
       const postUser = await getPostuser(username);
+      const getUser = await getUsr()
+     
 
       if (response && profilePost && postUser) {
         await setProfile(response);
         await serUser(postUser);
         await setPost(profilePost);
+        if(username === getUser.username ){
+         return  await setProfil()
+        }
         await setUserProfil();
       }
     } catch (error) {
@@ -67,13 +72,13 @@ const Post = () => {
       {loading ? (
         <Loading />
       ) : (
-        <>
+        <> 
           <PostHead />
           {!feed ? (
             <>
               {post.map((item, index) => (
                 <div
-                  className=" w-full md:w-[580px] h-auto  md:p-2 p-3 flex flex-col  justify-between items-center mb-10 "
+                  className=" w-full md:w-[580px] h-screen  md:p-2 p-3 flex flex-col  justify-between items-center mb-10 "
                   key={index}
                 >
                   <div className="h-auto w-full bg-black border-t-[1px] border-white flex border-opacity-30 p-2">

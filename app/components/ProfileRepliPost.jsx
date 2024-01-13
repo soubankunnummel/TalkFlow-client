@@ -3,11 +3,11 @@ import React, { useState } from "react";
 import Loading from "./Loading";
 import { MdAddCircle } from "react-icons/md";
 import { IoIosMore } from "react-icons/io";
-import Like from "./Like";
+import Like from "./Like"; 
 import Coment from "./Coment";
 import Repost from "./Repost";
 import Share from "./Share";
-import usePosts from "../zustand/posts/posts";
+import {usePosts} from "../zustand/posts/posts";
 import Replie from "./Replie";
 
 function RepliPost() {

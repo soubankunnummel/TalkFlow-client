@@ -66,6 +66,7 @@ import Axios from "./axios"
     export const folloUnfollowUser = async (id) => {
         try {
             const response = await Axios.post(`/api/users/follow/${id}`)
+            console.log(response)
             if(response.status === 200){
                 return response.data
             }

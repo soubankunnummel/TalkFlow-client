@@ -1,4 +1,4 @@
-import create from 'zustand'
+import {create} from 'zustand'
 
 const usePosts = create ((set) => ({
     post: [], 
@@ -42,4 +42,4 @@ const usePosts = create ((set) => ({
 
 }))
 
-export default usePosts   
+export  {usePosts}   

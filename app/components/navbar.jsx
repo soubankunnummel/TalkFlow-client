@@ -6,10 +6,10 @@ import { FiSearch } from "react-icons/fi";
 import { HiHome, HiUser } from "react-icons/hi2";
 import { useRouter } from "next/navigation";
 import { logoutUser } from "../service/auth";
-import useProfile from "../zustand/posts/profilePost";
+import {useProfile} from "../zustand/posts/profilePost";
 import { GoHeart } from "react-icons/go";
 import { getPostuser, getProfielPost, getUsr } from "../service/users";
-import usePosts from "../zustand/posts/posts";
+import {usePosts} from "../zustand/posts/posts";
 import toast from "react-hot-toast";
 import { useTheme } from "next-themes";
 
@@ -27,8 +27,6 @@ function NavBar() {
   const getUser = async () => {
     try {
       const response = await getUsr();
-
-      console.log(response.username);
       if (response) {
         username = response.username;
         userId = response._id;
@@ -61,6 +59,7 @@ function NavBar() {
     try {
       const response = await logoutUser();
       if (response) {
+        localStorage.removeItem("jwt")
         toast.success("Logged out successfully");
 
         router.push("/page/login");
@@ -85,7 +84,7 @@ function NavBar() {
   return (
     <div
     className={`w-full h-auto mt-0 p-5 flex  justify-between items-center sticky top-0 bg-opacity-90 ${
-      theme === 'dark' ? 'bg-white text-black' : 'bg-black text-white '
+     'bg-black text-white '
     }`}
     style={{
       zIndex: 1000,
@@ -95,7 +94,7 @@ function NavBar() {
         {" "}
         <div
           className={`md:h-14 md:w-14 h-8 w-8${
-            theme === 'dark' ? 'bg-white text-black' : 'bg-black text-white '
+           'bg-black text-white '
           }`}
           style={{
             backgroundImage: `url("https://seeklogo.com/images/T/threads-logo-1ABBA246BE-seeklogo.com.png")`,

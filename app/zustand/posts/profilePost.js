@@ -1,4 +1,4 @@
-import create from 'zustand'
+import {create} from 'zustand'
 
 const useProfile = create((set) => ({ 
     profile: false, 
@@ -20,5 +20,4 @@ const useProfile = create((set) => ({
 
 
 }))
-
-export default useProfile 
+export { useProfile }

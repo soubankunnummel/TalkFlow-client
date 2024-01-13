@@ -54,7 +54,7 @@ export const createPost = async (fomData) => {
             }
          });
 
-        console.log("response of image upload", response);
+        // console.log("response of image upload", response);
 
         if (response.status === 201) {
             return response.data;
@@ -103,8 +103,9 @@ export const createPost = async (fomData) => {
         try {
             const response = await Axios.post(`/api/posts/notification`)
             console.log(response.data)
-            if(response.status === 200){
-                return response.data
+            if(response.status === 200 && response.data.length > 0){
+                
+                return response.data.message
             }
         } catch (error) {
             console.log("error in create post", error)

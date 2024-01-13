@@ -1,4 +1,4 @@
-import create from 'zustand';
+import {create} from 'zustand';
 
 const useFolloPost = create((set) => ({
    // foryou:false,
@@ -13,4 +13,4 @@ const useFolloPost = create((set) => ({
    setOutShowModal: () => set({showModal:false})
 }))
 
-export default useFolloPost;
+export  {useFolloPost};

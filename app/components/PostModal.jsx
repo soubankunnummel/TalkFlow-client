@@ -5,7 +5,7 @@ import { CgMoreO } from "react-icons/cg";
 
 const CreatePostModal = ({
   username, 
-  setText,
+  setText, 
   handleFileChange,
   handlePostSubmit,
 }) => {

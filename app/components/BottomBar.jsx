@@ -4,9 +4,9 @@ import { FaRegHeart } from 'react-icons/fa6'
 import { HiHome, HiUser } from 'react-icons/hi2'
 import { FiSearch } from "react-icons/fi";
 import { IoCreateOutline } from "react-icons/io5";
-import useProfile from '../zustand/posts/profilePost';
+import {useProfile} from '../zustand/posts/profilePost';
 import { getPostuser, getProfielPost, getUsr } from '../service/users';
-import usePosts from '../zustand/posts/posts';
+import {usePosts} from '../zustand/posts/posts';
 import { useRouter } from 'next/navigation';
 
  

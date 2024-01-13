@@ -4,10 +4,10 @@ import { IoIosMore } from "react-icons/io";
 import { MdAddCircle } from "react-icons/md";
 import Like from "./Like";
 import Coment from "./Coment";
-import Repost from "./Repost";
+import Repost from "./Repost"; 
 import Share from "./Share";
 import Loading from "./Loading";
-import usePosts from "../zustand/posts/posts";
+import {usePosts} from "../zustand/posts/posts";
 import { postDelet } from "../service/post";
 import toast from "react-hot-toast";
 import { getProfielPost } from "../service/users";
@@ -17,7 +17,7 @@ function ProfilePost() {
   const [loading, setLoading] = useState(false);
   const { post, user, setPost } = usePosts();
   const { profile } = useProfileStore();
-  console.log("profil",profile.profilePic)
+  // console.log("profil",profile.profilePic)
 
   useEffect(() => {
     setLoading(!post);
@@ -97,7 +97,7 @@ function ProfilePost() {
                               }}
                             ></div>
                           ))}
-                        </div>
+                        </div> 
                       </div>
                     </div>
                     <div className=" w-full h-full bg-black flex flex-col">

@@ -5,7 +5,7 @@ import Replies from "@/app/components/Replies";
 import Reposts from "@/app/components/Reposts";
 import ProfilePost from "@/app/components/ProfilePost";
 import RepliPost from "@/app/components/ProfileRepliPost";
-import usePosts from "@/app/zustand/posts/posts";
+import {usePosts} from "@/app/zustand/posts/posts";
 import ProfilRepos from "@/app/components/ProfilRepos";
 import { getProfile, getUsr } from "@/app/service/users";
 import { useEffect } from "react";
@@ -14,7 +14,7 @@ import useProfileStore from "@/app/zustand/users/profileStore";
 var username;
 var userId;
 function UserProfile() {
-  const { selected } = usePosts();
+  const { selected } = usePosts(); 
   const { profile } = useProfileStore();
 
 
@@ -75,9 +75,15 @@ function UserProfile() {
             </div>
           </div>
         </div>
-        <button className="w-full h-10 bg-transparent border border-opacity-20 border-white text-center rounded-md mt-3">
-          Edit Profile
+        <div className="w-full flex justify-evenly gap-2">
+
+        <button className="w-1/2 h-10 bg-white border border-opacity-20 border-white text-black text-center rounded-lg mt-3">
+         Follow
         </button>
+        <button className="w-1/2 h-10 bg-transparent border border-opacity-20 border-white text-center rounded-lg mt-3">
+          Mention
+        </button>
+        </div>
         <div className="w-full h-full  flex justify-evenly items-center  text-white text-center mt-2 p-3">
           <Threads />
           <Replies />

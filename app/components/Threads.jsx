@@ -1,5 +1,5 @@
 import React from 'react'
-import usePosts from '../zustand/posts/posts'
+import {usePosts} from '../zustand/posts/posts'
 
 function Threads() { 
   const {setOutRepliPost} = usePosts()

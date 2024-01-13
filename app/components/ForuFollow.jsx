@@ -1,5 +1,5 @@
 import React from 'react';
-import useFolloPost from '../zustand/posts/followPost';
+import {useFolloPost} from '../zustand/posts/followPost';
 import { GoArrowRight, GoArrowSwitch } from "react-icons/go";
 
 function ForuFollow() {

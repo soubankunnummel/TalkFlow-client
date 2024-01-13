@@ -1,6 +1,6 @@
 
 
-import create  from 'zustand'
+import {create}  from 'zustand'
 
 const usePostsStroe = create ((set) => ({
 

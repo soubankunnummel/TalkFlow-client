@@ -6,15 +6,13 @@ import { useRouter } from "next/navigation";
 import Loading from "@/app/components/Loading"; 
 import { signIn, useSession } from "next-auth/react"
 import toast from "react-hot-toast";
-import { getPostuser, getProfielPost } from "@/app/service/users";
-import usePosts from "@/app/zustand/posts/posts";
 import useAuthStore from "@/app/zustand/users/authStore";
 
 function login() {
   const { data: session , mutate} = useSession();
   const {setGoogleEmail, googleEmail,} = useAuthStore()
   const router = useRouter();
-  const { setPost, serUser } = usePosts();
+
   const [email, setEmail] = useState("")
   const [login, setLogin] = useState({
     username: "",
@@ -38,13 +36,8 @@ function login() {
       const response = await loginuser(login)
       if (response) {
         setLoading(true)
-        const post = await getProfielPost(login.username);
-        const user = await getPostuser(login.username);
-        if(post && user) {
-          await setPost(post)
-          await serUser(user)
-        }
-         router.push("/")
+        
+        return router.replace("/")
       } else {
          toast.error("Invalid username or password")
        

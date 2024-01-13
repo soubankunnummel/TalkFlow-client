@@ -1,5 +1,5 @@
 import { gePostbyId, replaPost } from "@/app/service/post";
-import usePosts from "@/app/zustand/posts/posts";
+import {usePosts} from "@/app/zustand/posts/posts";
 import React, { useEffect } from "react";
 import toast from "react-hot-toast";
 import { IoIosMore } from "react-icons/io";

@@ -1,5 +1,5 @@
 import React from 'react'
-import usePosts from '../zustand/posts/posts'
+import {usePosts} from '../zustand/posts/posts'
 import { getRepliedPosts } from '../service/post'
 
 function Replies() {

@@ -3,7 +3,7 @@ import Post from "@/app/components/Post";
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 import Profile from "../profile/page";
-import useProfile from "@/app/zustand/posts/profilePost";
+import {useProfile} from "@/app/zustand/posts/profilePost";
 import Search from "@/app/components/Search";
 import Activity from "@/app/components/Activity";
 import UserProfile from "../user/page";

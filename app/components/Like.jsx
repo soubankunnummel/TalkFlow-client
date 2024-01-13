@@ -1,7 +1,7 @@
 import { GoHeart } from "react-icons/go";
 import React, { useState, useEffect } from 'react';
 import { getNotification, getPost, likePost } from "../service/post";
-import usePosts from "../zustand/posts/posts";
+import {usePosts} from "../zustand/posts/posts";
 import { IoHeart } from "react-icons/io5";
 import { getUsr } from "../service/users";
 import toast from "react-hot-toast";
@@ -26,9 +26,9 @@ function Like({ postId, index , username}) {
       if (response && post) {
         const reply = await getNotification()
         console.log("post in like ", post)
-        console.log("rep")
+        
         if(reply){
-          toast.success("POst liked")
+          toast.success(reply)
         }
 
         

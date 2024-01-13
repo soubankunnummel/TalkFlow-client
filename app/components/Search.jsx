@@ -3,18 +3,18 @@ import { RiSearchLine } from "react-icons/ri";
 import { folloUnfollowUser, getAllUsers, getPostuser, getProfielPost, getProfile } from "../service/users";
 import Loading from "./Loading";
 import useProfileStore from "../zustand/users/profileStore";
-import usePosts from "../zustand/posts/posts";
-import useProfile from "../zustand/posts/profilePost";
+import {usePosts} from "../zustand/posts/posts";
+import {useProfile} from "../zustand/posts/profilePost";
 
 function Search() {
   const [users, setUsers] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(true); 
   const [search, setSearch] = useState("");
   const [followStates, setFollowStates] = useState([]);
   const {setProfile} = useProfileStore()
   const {setUserProfil} = useProfile()
   const { setPost, serUser, post } = usePosts();
-  console.log(users);
+  // console.log(users);
 
   const getUsers = async () => {
     try {
@@ -54,7 +54,9 @@ function Search() {
   const handleFollow = async (id, index) => {
     try {
       const response = await folloUnfollowUser(id);
+      const user = await getAllUsers()
       if (response) {
+        setUsers(user)
         setFollowStates((prevState) => {
           const newState = [...prevState];
           newState[index] = !prevState[index];

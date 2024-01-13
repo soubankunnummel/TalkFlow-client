@@ -1,6 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
-import useFolloPost from "../zustand/posts/followPost";
+import {useFolloPost} from "../zustand/posts/followPost";
 
 function ForYou({ isActive, setActiveComponent }) {
 
