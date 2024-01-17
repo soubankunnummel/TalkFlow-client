@@ -9,7 +9,7 @@ import Activity from "@/app/components/Activity";
 import UserProfile from "../user/page";
   
 
-function Home() {
+function Home() { 
 
   const { selected } = useProfile();
   const  {search} = useProfile()
@@ -24,8 +24,8 @@ function Home() {
      {selected === "userprofile" && <UserProfile/>}
       {selected === "search" && <Search />}
       {selected === "likes" && <Activity />}
-      
-      {!selected && <Post />}
+      {selected === "home" && <Post/> || !selected && <Post/>}
+      {/* {!selected && <Post />} */}
       
    
 

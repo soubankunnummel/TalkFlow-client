@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { MdOutlineSort } from "react-icons/md";
 import { IoCreateOutline } from "react-icons/io5";
 import { FiSearch } from "react-icons/fi";
@@ -18,8 +18,12 @@ let userId;
 function NavBar() {
   const fileInputRef = useRef(null);
   const { setPost, serUser } = usePosts();
-  const { theme, setTheme } = useTheme();
-  const { setProfil, setOutProfile, setSearch, setLikes } = useProfile();
+  const { theme, setTheme } = useTheme();     
+  const [lik, setLik] = useState(null)
+  const [prof, setProf] = useState(null)
+  const [serch, setSerch] = useState(null)
+  const [land, setLand] = useState(null)
+  const { setProfil, profile, setOutProfile, setSearch, setLikes, likes, setOutLikes, setHome, selected } = useProfile();
   const router = useRouter();
 
   const getUser = async () => {
@@ -31,7 +35,7 @@ function NavBar() {
       }
     } catch (error) {
       console.log("Error in nave bar", error);
-    }
+    } 
   };
 
   const handleProfile = async () => {
@@ -47,6 +51,14 @@ function NavBar() {
       console.log(error);
     }
     setProfil();
+    setProf("profile")
+    setLik(null)
+   setSerch(null)
+   setLand(null)
+
+
+    
+    // setOutLikes()
   };
 
   // logout
@@ -65,6 +77,31 @@ function NavBar() {
     }
   };
 
+  const handleSearch = () => {
+    setSearch()
+    setSerch("serch")
+   setLik(null)
+   setProf(null)
+   setLand(null)
+
+
+  }
+  const handleActivity = () => {
+    setLikes()
+   setLik("Like")
+   setSerch(null)
+   setProf(null)
+   setLand(null)
+   
+  }
+  const handleHome = () => {
+    setHome()
+    setLand("Home")
+    setSerch(null)
+    setProf(null)
+    setLand(null)
+  }
+
   // theam chnaging
 
   // const currentTheam = theam === 'system' ?  systemTeam: theam
@@ -79,7 +116,7 @@ function NavBar() {
 
   return (
     <div
-      className={`w-full h-auto mt-0 p-5 flex  justify-between items-center sticky top-0 bg-opacity-90 ${"bg-black text-white "}`}
+      className={`w-full h-auto mt-0 p-5 flex  justify-between items-center sticky top-0 bg-opacity-90 bg-black text-white`}
       style={{
         zIndex: 1000,
       }}
@@ -87,7 +124,7 @@ function NavBar() {
       <div className="text-xs  font-thin w-full md:w-auto flex justify-center">
         {" "}
         <div
-          className={`md:h-14 md:w-14 h-8 w-8${"bg-black text-white "}`}
+          className={`md:h-14 md:w-14 h-8 w-8 bg-black`}
           style={{
             backgroundImage: `url("https://seeklogo.com/images/T/threads-logo-1ABBA246BE-seeklogo.com.png")`,
             backgroundSize: "contain",
@@ -115,16 +152,16 @@ function NavBar() {
       </div>
       <div className=" text-white font-thin h-auto md:flex hidden  ">
         <button
-          className="btn h-auto px-7 py-5 bg-transparent hover:bg-stone-800 border-none  rounded-lg flex flex-col justify-center items-center "
-          onClick={() => setOutProfile()}
+          className={`btn h-auto px-7 py-5 bg-transparent hover:bg-stone-800 border-none  rounded-lg flex flex-col justify-center items-center ${!selected || land &&'bg-stone-700'} `}
+          onClick={handleHome}
         >
           <HiHome
             className={`text-3xl text-white text-opacity-50 hover:text-opacity-90`}
           />
         </button>
         <button
-          className=" btn h-auto px-7 py-5 bg-transparent hover:bg-stone-800 border-none  rounded-lg flex flex-col justify-center items-center"
-          onClick={() => setSearch()}
+          className={` btn h-auto px-7 py-5 bg-transparent hover:bg-stone-800 border-none  rounded-lg flex flex-col justify-center items-center ${serch && "bg-stone-700" }`}
+          onClick={handleSearch}
         >
           <FiSearch className="text-3xl text-white text-opacity-50  hover:text-opacity-90" />
         </button>
@@ -143,16 +180,16 @@ function NavBar() {
           <IoCreateOutline className="text-3xl text-white text-opacity-50 hover:text-opacity-90" />
         </button>
         <button
-          className="btn h-auto px-7 py-5 bg-transparent hover:bg-stone-800  rounded-lg  border-none flex flex-col justify-center items-center "
-          onClick={() => setLikes()}
+          className={`btn h-auto px-7 py-5 bg-transparent hover:bg-stone-800  rounded-lg  border-none flex flex-col justify-center items-center ${lik && "bg-stone-700" }`}
+          onClick={handleActivity}
         >
           <GoHeart className="text-3xl text-white text-opacity-50 hover:text-opacity-90" />
         </button>
         <button
-          className="btn h-auto px-7  py-5 bg-transparent hover:bg-stone-800  rounded-lg flex border-none flex-col justify-center items-center "
+          className={`btn h-auto px-7  py-5 bg-transparent hover:bg-stone-800  rounded-lg flex border-none flex-col justify-center items-center ${prof && "bg-stone-700" }  `}
           onClick={handleProfile}
         >
-          <HiUser className="text-3xl text-white text-opacity-50 hover:text-opacity-90" />
+          <HiUser className={`text-3xl text-white text-opacity-50 hover:text-opacity-90 ` } />
         </button>
       </div>
       <div className="text-3xl text-white text-opacity-50 font-thin md:flex hidden ">
@@ -173,8 +210,7 @@ function NavBar() {
               <a onClick={handleToggleTheme}>Swich Appearnse</a>
             </li>
 
-            {/* { */}
-              {/* // (typeof window !== "undefined" && localStorage.getItem("jwt")) ? ( */}
+           
                 <li>
                   <a onClick={handleLogout}>Log out</a>
                 </li>
