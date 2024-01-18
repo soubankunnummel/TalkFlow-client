@@ -15,7 +15,7 @@ import { useTheme } from "next-themes";
 import useAuthStore from "../zustand/users/authStore";
 
 var username;
-let userId;
+
 function NavBar() {
   const fileInputRef = useRef(null);
   const { setPost, serUser } = usePosts();
@@ -25,15 +25,18 @@ function NavBar() {
   const [serch, setSerch] = useState(null)
   const [land, setLand] = useState(null)
   const { setProfil, profile, setOutProfile, setSearch, setLikes, likes, setOutLikes, setHome, selected } = useProfile();
-  const {isUser, setIsUser} = useAuthStore()
+ 
   const router = useRouter();
-  console.log("user status:", isUser)
+  const user = localStorage.getItem("user")
+
+ 
   const getUser = async () => {
     try {
       const response = await getUsr();
       if (response) {
         username = response.username;
-        userId = response._id;
+        console.log("username", username)
+        // userId = response._id;
       }
     } catch (error) {
       console.log("Error in nave bar", error);
@@ -41,18 +44,28 @@ function NavBar() {
   };
 
   const handleProfile = async () => {
+    
+    
     try {
+
       const response = await getProfielPost(username);
       const user = await getPostuser(username);
 
       if (response && user) {
         setPost(response);
         serUser(user);
+        
       }
     } catch (error) {
       console.log(error);
     }
-    setProfil();
+
+    if(user === "true"){
+      setProfil();
+    }else{
+      toast.error("Unautherized")
+    }
+  
     setProf("profile")
     setLik(null)
    setSerch(null)
@@ -70,8 +83,9 @@ function NavBar() {
       // const response = await logoutUser();
       
         localStorage.removeItem("jwt");
+        localStorage.setItem("user",false)
         toast.success("Logged out successfully");
-        setIsUser(false)
+        
         router.push("/page/login");
       
     } catch (error) {
@@ -102,6 +116,7 @@ function NavBar() {
     setSerch(null)
     setProf(null)
     setLand(null)
+    console.log("Homeclicked", land)
   }
 
   // theam chnaging
@@ -113,9 +128,20 @@ function NavBar() {
   };
 
   useEffect(() => {
-    getUser();
-  }, []);
+    // getUser();
+  }, [getUser]);
 
+  const hanleCreate = () => {
+    if(user === "true"){
+
+       router.push("/page/create")
+    }else{
+
+      toast.error("Unautherized")
+      router.replace("/");
+       
+    }
+  }
   return (
     <div
       className={`w-full h-auto mt-0 p-5 flex  justify-between items-center sticky top-0 bg-opacity-90 bg-black text-white`}
@@ -154,7 +180,7 @@ function NavBar() {
       </div>
       <div className=" text-white font-thin h-auto md:flex hidden  ">
         <button
-          className={`btn h-auto px-7 py-5 bg-transparent hover:bg-stone-800 border-none  rounded-lg flex flex-col justify-center items-center ${!selected || land &&'bg-stone-700'} `}
+          className={`btn h-auto px-7 py-5 bg-transparent hover:bg-stone-800 border-none  rounded-lg flex flex-col justify-center items-center ${!selected || land &&'bg-zinc-700'} `}
           onClick={handleHome}
         >
           <HiHome
@@ -162,7 +188,7 @@ function NavBar() {
           />
         </button>
         <button
-          className={` btn h-auto px-7 py-5 bg-transparent hover:bg-stone-800 border-none  rounded-lg flex flex-col justify-center items-center ${serch && "bg-stone-700" }`}
+          className={` btn h-auto px-7 py-5 bg-transparent hover:bg-stone-800 border-none  rounded-lg flex flex-col justify-center items-center ${serch && "bg-zinc-700" }`}
           onClick={handleSearch}
         >
           <FiSearch className="text-3xl text-white text-opacity-50  hover:text-opacity-90" />
@@ -177,18 +203,18 @@ function NavBar() {
 
         <button
           className="btn h-auto  py-n px-7 bg-transparent hover:bg-stone-800 border-none rounded-lg  flex flex-col justify-center items-center"
-          onClick={() => router.push("/page/create")}
+          onClick={() => hanleCreate()}
         >
           <IoCreateOutline className="text-3xl text-white text-opacity-50 hover:text-opacity-90" />
         </button>
         <button
-          className={`btn h-auto px-7 py-5 bg-transparent hover:bg-stone-800  rounded-lg  border-none flex flex-col justify-center items-center ${lik && "bg-stone-700" }`}
+          className={`btn h-auto px-7 py-5 bg-transparent hover:bg-stone-800  rounded-lg  border-none flex flex-col justify-center items-center ${lik && "bg-zinc-700" }`}
           onClick={handleActivity}
         >
           <GoHeart className="text-3xl text-white text-opacity-50 hover:text-opacity-90" />
         </button>
         <button
-          className={`btn h-auto px-7  py-5 bg-transparent hover:bg-stone-800  rounded-lg flex border-none flex-col justify-center items-center ${prof && "bg-stone-700" }  `}
+          className={`btn h-auto px-7  py-5 bg-transparent hover:bg-stone-800  rounded-lg flex border-none flex-col justify-center items-center ${prof && "bg-zinc-700" }  `}
           onClick={handleProfile}
         >
           <HiUser className={`text-3xl text-white text-opacity-50 hover:text-opacity-90 ` } />
@@ -205,14 +231,12 @@ function NavBar() {
             tabIndex={0}
             className="p-2 shadow menu dropdown-content z-[1] bg-stone-900 rounded-box w-52"
           >
-            <li>
-              <a>Item 1</a>
-            </li>
+           
             <li>
               <a onClick={handleToggleTheme}>Swich Appearnse</a>
             </li>
 
-           {isUser ? (
+           {user  ? (
                 <li>
                   <a onClick={handleLogout}>Log out</a>
                 </li>

@@ -1,6 +1,6 @@
 import {create} from 'zustand'
 
-const usePosts = create ((set) => ({
+const usePosts = create ((set) => ({ 
     post: [], 
     user:'',
 
