@@ -1,4 +1,5 @@
 
+import toast from "react-hot-toast"
 import Axios from "./axios"
 
 
@@ -13,7 +14,7 @@ import Axios from "./axios"
                 return response.data.posts
             }
         } catch (error) {
-            console.log("Error in getProfile", error)
+            // console.error( error)
         }
     }
 
@@ -28,7 +29,7 @@ import Axios from "./axios"
                 return response.data.user
             }
         } catch (error) {
-            console.log("Error in getProfile", error)
+            // console.log("Error in getProfile", error)
         }
     }
   
@@ -38,12 +39,13 @@ import Axios from "./axios"
         try {
             const response = await Axios.get('api/users/user')
             if(response.status === 200){
-
+             
                 return response.data
-
+                
             }
         } catch (error) {
-            console.log("Error in get user", error)
+         
+            toast.error( error.response.statusText)
             
         }
     }
@@ -94,7 +96,7 @@ import Axios from "./axios"
     export const getProfile = async (username) => {
         try {
             const response = await Axios.get(`/api/users/user-profile/${username}`)
-            console.log('respons:' ,response.data)
+            
             if(response.status === 200) {
 
                 return response.data
@@ -123,5 +125,15 @@ import Axios from "./axios"
             }
         } catch (error) {
             console.log("Error in Edit Profile", error)
+        }
+    }
+
+// check user name exist 
+
+    export const checkUsername = async () => {
+        try {
+            
+        } catch (error) {
+            
         }
     }

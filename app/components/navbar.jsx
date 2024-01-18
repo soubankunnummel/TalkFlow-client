@@ -12,6 +12,7 @@ import { getPostuser, getProfielPost, getUsr } from "../service/users";
 import { usePosts } from "../zustand/posts/posts";
 import toast from "react-hot-toast";
 import { useTheme } from "next-themes";
+import useAuthStore from "../zustand/users/authStore";
 
 var username;
 let userId;
@@ -24,8 +25,9 @@ function NavBar() {
   const [serch, setSerch] = useState(null)
   const [land, setLand] = useState(null)
   const { setProfil, profile, setOutProfile, setSearch, setLikes, likes, setOutLikes, setHome, selected } = useProfile();
+  const {isUser, setIsUser} = useAuthStore()
   const router = useRouter();
-
+  console.log("user status:", isUser)
   const getUser = async () => {
     try {
       const response = await getUsr();
@@ -65,13 +67,13 @@ function NavBar() {
 
   const handleLogout = async () => {
     try {
-      const response = await logoutUser();
-      if (response) {
+      // const response = await logoutUser();
+      
         localStorage.removeItem("jwt");
         toast.success("Logged out successfully");
-
+        setIsUser(false)
         router.push("/page/login");
-      }
+      
     } catch (error) {
       console.log("Erro in Logout ui", error);
     }
@@ -210,10 +212,17 @@ function NavBar() {
               <a onClick={handleToggleTheme}>Swich Appearnse</a>
             </li>
 
-           
+           {isUser ? (
                 <li>
                   <a onClick={handleLogout}>Log out</a>
                 </li>
+
+           ): (
+
+                <li>
+                  <a onClick={() => router.push("/page/login")}>Sign up</a>
+                </li>
+           )}
               
           </ul>
         </div>

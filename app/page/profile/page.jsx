@@ -23,7 +23,7 @@ function Profile() {
   const getUser = async () => {
     try {
       const response = await getUsr();
-      console.log(response)
+      
 
       // console.log(response.username);
       if (response) {

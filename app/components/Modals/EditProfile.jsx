@@ -26,7 +26,7 @@ function EditProfile() {
     try {
       const response = await getUsr();
 
-      console.log(response);
+     
       if (response) {
         setProfile(response);
         setUserName(response.username);
@@ -50,7 +50,7 @@ function EditProfile() {
   const handleSubmit = async (id) => {
     try {
       const response = await editProfile(id, fomdata);
-      console.log(": -re", response);
+    
       if (response) {
         return toast.success("Profile Updated");
       }

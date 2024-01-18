@@ -10,7 +10,7 @@ import useAuthStore from "@/app/zustand/users/authStore";
 
 function login() {
   const { data: session , mutate} = useSession();
-  const {setGoogleEmail, googleEmail,} = useAuthStore()
+  const {setGoogleEmail, googleEmail, setIsUser} = useAuthStore()
   const router = useRouter();
 
   const [email, setEmail] = useState("")
@@ -33,10 +33,10 @@ function login() {
       
     try {
 
+      setLoading(true)
       const response = await loginuser(login)
       if (response) {
-        setLoading(true)
-        
+        setIsUser()
         return router.replace("/")
       } else {
          toast.error("Invalid username or password")
