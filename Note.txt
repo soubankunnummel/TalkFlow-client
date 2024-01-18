@@ -49,3 +49,10 @@ post :-
             
 
           </div>
+
+
+
+
+          ->
+
+          //TODO: move the getu user function in to the profile componet 

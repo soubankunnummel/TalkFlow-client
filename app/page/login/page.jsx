@@ -21,6 +21,8 @@ function login() {
   const [loginError, setLoginError] = useState(null);
   const [loading, setLoading] = useState(false);
 
+
+
   const hadleChange = (e) => {
     setLogin({ ...login, [e.target.name]: e.target.value });
   }
@@ -33,11 +35,12 @@ function login() {
       
     try {
 
-      setLoading(true)
       const response = await loginuser(login)
       if (response) {
-        setIsUser()
-        return router.replace("/")
+        // setIsUser()
+        localStorage.setItem("user",true)
+        // await setLoading(true)
+         router.replace("/")
       } else {
          toast.error("Invalid username or password")
        
