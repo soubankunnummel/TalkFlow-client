@@ -213,7 +213,7 @@ function NavBar() {
               <a onClick={handleToggleTheme}>Swich Appearnse</a>
             </li>
 
-           {user === "true"  ? (
+           {user   ? (
                 <li>
                   <a onClick={handleLogout}>Log out</a>
                 </li>
