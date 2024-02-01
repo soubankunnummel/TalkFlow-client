@@ -10,25 +10,56 @@ import Loading from "./Loading";
 import {usePosts} from "../zustand/posts/posts";
 import { postDelet } from "../service/post";
 import toast from "react-hot-toast";
-import { getProfielPost } from "../service/users";
+import { getPostuser, getProfielPost, getUsr } from "../service/users";
 import useProfileStore from "../zustand/users/profileStore";
+
+
 
 function ProfilePost() {
   const [loading, setLoading] = useState(false);
-  const { post, user, setPost } = usePosts();
-  const { profile } = useProfileStore();
-  // console.log("profil",profile.profilePic)
+  const { post, user,serUser, setPost } = usePosts();
+  const [data , setData] = useState([])
+  const [username, setUserName] = useState("")
+  const { profile,  } = useProfileStore();
 
   useEffect(() => {
-    setLoading(!post);
-  }, [post]);
+    setLoading(!data);
+  }, [data]);
+
+  const fechUserData = async() => {
+    try {
+      const user = await getUsr()
+      return user
+   
+    } catch (error) {
+      console.error(error)
+    }
+  }
+
+  const fechProfilePost = async () => {
+    try {
+      const user = await fechUserData()
+      const username = await getPostuser(user.username)
+      if(user && username){
+
+        const posts = await getProfielPost(user.username)
+        setData(posts)
+        serUser(username)
+      }
+    } catch (error) {
+      
+    }
+  }
+
+  useEffect(() => { fechProfilePost()},[])
 
   const handeDelete = async (id) => {
     try {
+      const user = await fechUserData()
       const response = await postDelet(id);
       const post = await getProfielPost(user.username);
       if (response && post) {
-        setPost(post);
+        setData(post);
         toast.success("Post deleted");
       }
     } catch (error) {
@@ -43,7 +74,7 @@ function ProfilePost() {
         <Loading />
       ) : (
         <>
-          {post.length === 0 ? (
+          {data.length === 0 ? (
             <div className="flex w-full justify-center items-center  text-white text-opacity-30 h-screen ">
               <h1 className="flex justify-center items-center ">
                 No Posts yet
@@ -51,7 +82,7 @@ function ProfilePost() {
             </div>
           ) : (
             <>
-              {post.map((item, index) => (
+              {data.map((item, index) => (
                 <div
                   className=" w-full md:w-[580px] h-auto  md:p-2 p-3 flex flex-col relative top-[-27px]  justify-between items-center mb-10 "
                   key={item._id}

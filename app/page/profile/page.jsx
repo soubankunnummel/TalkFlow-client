@@ -14,8 +14,8 @@ import Follower from "@/app/components/Modals/Follower";
 import usersStore from "@/app/zustand/users/usersStore";
 import EditProfile from "@/app/components/Modals/EditProfile";
 
-var username;
-var userId;
+// var username;
+// var userId;
 function Profile() {
   const { selected } = usePosts();
   const { profile, setProfile } = useProfileStore();
@@ -23,14 +23,10 @@ function Profile() {
   const getUser = async () => {
     try {
       const response = await getUsr();
-      
-
-      // console.log(response.username);
-      if (response) {
-        username = response.username;
-        userId = response._id;
      
-        await fechData();
+      if (response) {
+     
+        return response
       }
     } catch (error) {
       console.log("", error);
@@ -53,7 +49,9 @@ function Profile() {
 
   const fechData = async () => {
     try {
-      const response = await getProfile(username);
+      const username = await getUser()
+    
+      const response = await getProfile(username.username);
 
       if (response) {
         await setProfile(response);
@@ -63,7 +61,7 @@ function Profile() {
     }
   };
   useEffect(() => {
-    getUser();
+    fechData()
   }, []);
 
   TODO:// add edit profile

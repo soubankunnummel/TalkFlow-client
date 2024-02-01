@@ -19,7 +19,7 @@ function Home() {
   return (
     <div className=" w-full h-auto flex justify-center flex-col items-center ">
      
-
+      
      {selected === "profile" && <Profile />}
      {selected === "userprofile" && <UserProfile/>}
       {selected === "search" && <Search />}

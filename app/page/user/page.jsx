@@ -11,13 +11,11 @@ import { getProfile, getUsr } from "@/app/service/users";
 import { useEffect } from "react";
 import useProfileStore from "@/app/zustand/users/profileStore";
 
-var username;
-var userId;
 function UserProfile() {
   const { selected } = usePosts(); 
   const { profile } = useProfileStore();
 
-
+useEffect(() => {},[profile])
   return (
     <>
       <div className="w-full md:w-[580px] h-full  md:p-2 p-3 flex flex-col  justify-between items-center   ">

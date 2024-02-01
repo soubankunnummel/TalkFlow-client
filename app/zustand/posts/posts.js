@@ -3,6 +3,8 @@ import {create} from 'zustand'
 const usePosts = create ((set) => ({ 
     post: [], 
     user:'',
+    name:'',
+    setName: (postData) => set({name:postData}),
 
     postbyid:{},
     setPostById: (postData) => set({postbyid: postData}),

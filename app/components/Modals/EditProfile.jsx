@@ -1,10 +1,13 @@
-import { editProfile, getUsr } from "@/app/service/users";
+import { checkUsername, editProfile, getPostuser, getUsr } from "@/app/service/users";
+import { usePosts } from "@/app/zustand/posts/posts";
 import useProfileStore from "@/app/zustand/users/profileStore";
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import toast from "react-hot-toast";
 import { BsPersonFillAdd } from "react-icons/bs";
 
 function EditProfile() {
+  const [status, setStatus] = useState(true);
+  const { post, user,serUser, setPost } = usePosts();
   const fileInputRef = useRef(null);
   let {
     profile,
@@ -22,11 +25,11 @@ function EditProfile() {
     promoimg,
     setPromoImg,
   } = useProfileStore();
+
   const getUser = async () => {
     try {
       const response = await getUsr();
 
-     
       if (response) {
         setProfile(response);
         setUserName(response.username);
@@ -49,9 +52,12 @@ function EditProfile() {
 
   const handleSubmit = async (id) => {
     try {
+      const user = await fechUserData()
+
       const response = await editProfile(id, fomdata);
-    
-      if (response) {
+
+      if (response && username) {
+        setUserName(user.username)
         return toast.success("Profile Updated");
       }
     } catch (error) {
@@ -59,6 +65,7 @@ function EditProfile() {
       toast.error(error.response.message);
     }
   };
+
   const fomdata = new FormData();
   fomdata.append("name", name);
   fomdata.append("email", email);
@@ -74,9 +81,34 @@ function EditProfile() {
     }
   };
 
+  const handleUsernameChange = async (e) => {
+    const newUsername = e.target.value;
+    setUserName(newUsername);
+    try {
+      const response = await checkUsername(newUsername);
+      if (response) {
+        setStatus(false);
+      }else{
+        setStatus(true);
+      }
+    } catch (error) {
+    }
+  };
+
   useEffect(() => {
     getUser();
+    handleSubmit()
   }, []);
+
+  const fechUserData = async() => {
+    try {
+      const user = await getUsr()
+      return user
+   
+    } catch (error) {
+      console.error(error)
+    }
+  }
   return (
     <>
       <dialog id="my_modal_3" className="modal">
@@ -139,14 +171,26 @@ function EditProfile() {
 
                 <div className="border-b-[1px] w-full">
                   <label htmlFor="profilePic">User Name</label>
-                  <input
-                    type="text"
-                    className="bg-transparent w-full p-2 focus:outline-none"
-                    name="username"
-                    id="username"
-                    value={username}
-                    onChange={(e) => setUserName(e.target.value)}
-                  />
+                  <div className="flex justify-between">
+                    <input
+                      type="text"
+                      className="bg-transparent w-full p-2 focus:outline-none"
+                      name="username"
+                      id="username"
+                      value={username}
+                      onChange={handleUsernameChange}
+                    />
+                    {status === false && (
+                      <p className="text-green-700 text-end text-sm">
+                        Username available
+                      </p>
+                    )}
+                    {status === true && (
+                      <p className="text-red-700 text-end text-sm">
+                        Username already taken
+                      </p>
+                    )}
+                  </div>
                 </div>
                 <div className="border-b-[1px] w-full">
                   <label htmlFor="bio">Bio</label>

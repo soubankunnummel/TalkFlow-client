@@ -10,7 +10,6 @@ import Axios from "./axios"
             const response = await Axios.get(`/api/users/profile/${username}`)
             
             if(response.status === 200){
-              
                 return response.data.posts
             }
         } catch (error) {
@@ -18,13 +17,14 @@ import Axios from "./axios"
         }
     }
 
-// get post user
+// to get the user name on the posts
 
 
     
     export const getPostuser = async (username) => {
         try {
             const response = await Axios.get(`/api/users/profile/${username}`)
+
             if(response.status === 200){
                 return response.data.user
             }
@@ -100,19 +100,17 @@ import Axios from "./axios"
             if(response.status === 200) {
 
                 return response.data
-                // const following = response.data.following
-                // const user = response.data.user
-                // return {user:user,following:following}
+            
             }
         } catch (error) {
             console.log("Error in get User Profile ", error)
         }
-    }
+    } 
 
 // Edit profile
 
     export const editProfile = async (id, fomData) => {
-        console.log("id from modal",id)
+     
         try {
             const respons = await Axios.put(`/api/users/update/${id}`,fomData,{
                 headers: {
@@ -124,16 +122,17 @@ import Axios from "./axios"
                 return respons.data
             }
         } catch (error) {
-            console.log("Error in Edit Profile", error)
         }
     }
 
 // check user name exist 
 
-    export const checkUsername = async () => {
+    export const checkUsername = async (username) => {
         try {
-            
+            const respons = await Axios.post('/api/users/check-username',{username})
+            if(respons.status === 200){
+                return respons.data
+            }
         } catch (error) {
-            
         }
     }

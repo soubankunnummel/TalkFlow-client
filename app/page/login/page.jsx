@@ -97,7 +97,6 @@ async function Glogin () {
 
       }
      
-      
     } catch (error) {
       console.log(error)
     }

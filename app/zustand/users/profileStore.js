@@ -1,12 +1,12 @@
 import {create} from 'zustand'
-
+ 
 const useProfileStore = create ((set) => ({
 
     promoimg:null,
     setPromoImg: (profileData) => ({profile:profileData}),
 
     profile:{},
-    setProfile: (profileData) =>  set({profile:profileData}),
+    setProfile: (profileData) =>  set({profile:profileData}), 
 
     username: "",
     setUserName: (profileData) => set({username:profileData}),

@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { MdOutlineSort } from "react-icons/md";
 import { IoCreateOutline } from "react-icons/io5";
 import { FiSearch } from "react-icons/fi";
@@ -14,53 +14,31 @@ import toast from "react-hot-toast";
 import { useTheme } from "next-themes";
 import useAuthStore from "../zustand/users/authStore";
 
-var username;
 
 function NavBar() {
-  const fileInputRef = useRef(null);
   const { setPost, serUser } = usePosts();
   const { theme, setTheme } = useTheme();     
   const [lik, setLik] = useState(null)
   const [prof, setProf] = useState(null)
   const [serch, setSerch] = useState(null)
   const [land, setLand] = useState(null)
+  const [user, setUser] = useState(null)
   const { setProfil, profile, setOutProfile, setSearch, setLikes, likes, setOutLikes, setHome, selected } = useProfile();
  
   const router = useRouter();
-  const user = localStorage.getItem("user")
+  // const user = localStorage.getItem("user")
 
- 
   const getUser = async () => {
     try {
-      const response = await getUsr();
-      if (response) {
-        username = response.username;
-        console.log("username", username)
-        // userId = response._id;
-      }
-    } catch (error) {
-      console.log("Error in nave bar", error);
-    } 
-  };
+      const user = await getUsr()
+     setUser(user)  
+    } catch (error) {}
+  }
+  useEffect(() => {getUser()} ,[])
 
   const handleProfile = async () => {
-    
-    
-    try {
 
-      const response = await getProfielPost(username);
-      const user = await getPostuser(username);
-
-      if (response && user) {
-        setPost(response);
-        serUser(user);
-        
-      }
-    } catch (error) {
-      console.log(error);
-    }
-
-    if(user === "true"){
+    if(user){
       setProfil();
     }else{
       toast.error("Unautherized")
@@ -79,14 +57,16 @@ function NavBar() {
   // logout
 
   const handleLogout = async () => {
+    console.log("clk")
     try {
-      // const response = await logoutUser();
-      
-        localStorage.removeItem("jwt");
-        localStorage.setItem("user",false)
-        toast.success("Logged out successfully");
-        
-        router.push("/page/login");
+      const response = await logoutUser();
+        if(response){
+
+          localStorage.removeItem("jwt");
+          toast.success("Logged out successfully");
+          
+          router.push("/page/login");
+        }
       
     } catch (error) {
       console.log("Erro in Logout ui", error);
@@ -116,7 +96,7 @@ function NavBar() {
     setSerch(null)
     setProf(null)
     setLand(null)
-    console.log("Homeclicked", land)
+    setLik(null)
   }
 
   // theam chnaging
@@ -127,12 +107,9 @@ function NavBar() {
     setTheme(theme === "dark" ? "light" : "dark");
   };
 
-  useEffect(() => {
-    // getUser();
-  }, [getUser]);
 
   const hanleCreate = () => {
-    if(user === "true"){
+    if(user){
 
        router.push("/page/create")
     }else{
@@ -236,7 +213,7 @@ function NavBar() {
               <a onClick={handleToggleTheme}>Swich Appearnse</a>
             </li>
 
-           {user  ? (
+           {user === "true"  ? (
                 <li>
                   <a onClick={handleLogout}>Log out</a>
                 </li>
