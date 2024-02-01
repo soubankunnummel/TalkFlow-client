@@ -37,7 +37,7 @@ import Axios from "./axios"
 
     export const getUsr = async () => {
         try {
-            const response = await Axios.get('api/users/user')
+            const response = await Axios.get('/api/users/user')
             if(response.status === 200){
              
                 return response.data
@@ -54,7 +54,7 @@ import Axios from "./axios"
 
     export const getAllUsers = async () => {
         try {
-            const response = await Axios(`api/users/users`)
+            const response = await Axios(`/api/users/users`)
             if(response.status === 200){
                 return response.data.Users
             }
@@ -68,7 +68,6 @@ import Axios from "./axios"
     export const folloUnfollowUser = async (id) => {
         try {
             const response = await Axios.post(`/api/users/follow/${id}`)
-            console.log(response)
             if(response.status === 200){
                 return response.data
             }

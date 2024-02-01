@@ -38,9 +38,8 @@ function login() {
       const response = await loginuser(login)
       if (response) {
         // setIsUser()
-        localStorage.setItem("user",true)
         // await setLoading(true)
-         router.replace("/")
+         router.push("/")
       } else {
          toast.error("Invalid username or password")
        

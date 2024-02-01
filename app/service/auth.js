@@ -60,8 +60,7 @@ const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
     
     const loginuser = async (data) => {
       try {
-        const response = await Axios.post(`${baseUrl}api/users/login`, data);
-        console.log(response)
+        const response = await Axios.post(`${baseUrl}/api/users/login`, data);
         if (response.status === 200) {
           const token = response.data.token;
           localStorage.setItem("jwt",token)
