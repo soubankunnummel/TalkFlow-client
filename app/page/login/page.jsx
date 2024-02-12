@@ -12,6 +12,7 @@ function login() {
   const { data: session , mutate} = useSession();
   const {setGoogleEmail, googleEmail, setIsUser} = useAuthStore()
   const router = useRouter();
+  const [reload,setReload] = useState(false)
 
   const [email, setEmail] = useState("")
   const [login, setLogin] = useState({
@@ -37,9 +38,13 @@ function login() {
 
       const response = await loginuser(login)
       if (response) {
+        setReload(true)
         // setIsUser()
         // await setLoading(true)
-         router.push("/")
+
+        router.push("/") 
+        
+        
       } else {
          toast.error("Invalid username or password")
        
@@ -49,6 +54,12 @@ function login() {
       setLoginError("An error occurred during login");
     }
   }
+  // if(reload){
+  //   window.location.reload()
+  // }
+  // useEffect(() => {
+  //  window.location.reload()
+  // },[reload])
 
 // google login
 

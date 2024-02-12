@@ -62,7 +62,7 @@ function NavBar() {
       const response = await logoutUser();
         if(response){
 
-          localStorage.removeItem("jwt");
+          localStorage.clear("jwt");
           toast.success("Logged out successfully");
           
           router.push("/page/login");
